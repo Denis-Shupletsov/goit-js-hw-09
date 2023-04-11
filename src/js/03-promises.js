@@ -9,19 +9,22 @@ formEL.addEventListener('submit', event => {
   event.preventDefault();
 
   let delay = Number(firstInputEl.value);
+  let currentDelay = delay;
 
   for (let i = 1; i <= thirdInputEL.value; i++) {
     if (i > 1) {
-      delay += Number(secondInputEl.value);
+      currentDelay += Number(secondInputEl.value);
     };
 
-    createPromise(2, 1500)
-      .then(({ position, delay }) => {
-        Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
-      })
-      .catch(({ position, delay }) => {
-        Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
-      });
+    setTimeout(() => {
+      createPromise(i, 1500)
+        .then(({ position, delay }) => {
+          Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        })
+        .catch(({ position, delay }) => {
+          Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+        });
+    }, currentDelay);
   }
 });
 

@@ -1,3 +1,5 @@
+
+
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
@@ -47,6 +49,10 @@ const options = {
             if (!selectData) return;
 
             const diff = selectData - now;
+            if (diff <= 0) {
+                clearInterval(timerId);
+                return;
+            }
             const { days, hours, minutes, seconds } = convertMs(diff);
             daysEl.textContent = days;
             hoursEl.textContent = addLeadingZero(hours);
